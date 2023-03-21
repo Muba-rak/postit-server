@@ -59,7 +59,7 @@ const createStory = async (req, res) => {
     fs.unlinkSync(req.files.image.tempFilePath);
     req.body.createdBy = userId;
     const post = await Post.create({ ...req.body });
-    res.status(201).json({ sucess: true, post });
+    res.status(201).json({ success: true, post });
   } catch (error) {
     res.json({ error });
   }
