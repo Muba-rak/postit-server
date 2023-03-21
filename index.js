@@ -29,6 +29,10 @@ app.get("/api/v1/user", auth, async (req, res) => {
   res.status(200).json({ name: user.name });
 });
 app.use("/api/v1", auth, postRouter);
+
+app.use((req, res) => {
+  res.send('route not found')
+})
 const startServer = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
