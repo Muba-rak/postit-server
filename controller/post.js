@@ -86,7 +86,7 @@ const updateStory = async (req, res) => {
   }
 };
 
-const deleteStory = async () => {
+const deleteStory = async (req, res) => {
   const { postId } = req.params;
   const { userId } = req.user;
   try {
