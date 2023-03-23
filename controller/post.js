@@ -65,7 +65,7 @@ const createStory = async (req, res) => {
   }
 };
 
-const updateStory = async () => {
+const updateStory = async (req, res) => {
   const { postId } = req.params;
   const { userId } = req.user;
   try {
@@ -80,24 +80,25 @@ const updateStory = async () => {
         runValidators: true,
       }
     );
-    res.status(200).json({ success: true, post })
-    
+    res.status(200).json({ success: true, post });
   } catch (error) {
-     res.json({ error });
+    res.json({ error });
   }
 };
 
 const deleteStory = async () => {
-   const { postId } = req.params;
+  const { postId } = req.params;
   const { userId } = req.user;
-   try {
-     const post = await Post.findOneAndDelete({ _id: postId, createdBy: userId });
-     res.status(200).json({ success: true, post });
-   } catch (error) {
-     res.json({ error });
-   }
-  
-}
+  try {
+    const post = await Post.findOneAndDelete({
+      _id: postId,
+      createdBy: userId,
+    });
+    res.status(200).json({ success: true, post });
+  } catch (error) {
+    res.json({ error });
+  }
+};
 
 module.exports = {
   getAStory,
@@ -106,5 +107,5 @@ module.exports = {
   getAllStoriesByUser,
   createStory,
   deleteStory,
-  updateStory
+  updateStory,
 };
