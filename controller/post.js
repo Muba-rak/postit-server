@@ -5,7 +5,7 @@ const fs = require("fs");
 //get all stories
 const getAllStories = async (req, res) => {
   try {
-    const posts = await Post.find({});
+    const posts = await Post.find({}).populate('createdBy');
     res.status(200).json({ success: true, posts });
   } catch (error) {
     res.json({ error });
@@ -17,7 +17,7 @@ const getAllStories = async (req, res) => {
 const getAStory = async (req, res) => {
   const { postId } = req.params;
   try {
-    const post = await Post.findById({ _id: postId });
+    const post = await Post.findById({ _id: postId }).populate("createdBy");;
     res.status(200).json({ success: true, post });
   } catch (error) {
     res.json({ error });
@@ -27,7 +27,7 @@ const getAStory = async (req, res) => {
 const getAllStoriesByUser = async (req, res) => {
   const { userId } = req.user;
   try {
-    const posts = await Post.find({ createdBy: userId });
+    const posts = await Post.find({ createdBy: userId }).populate("createdBy");;
     res.status(200).json({ success: true, posts });
   } catch (error) {
     res.json({ error });
@@ -38,7 +38,10 @@ const getAStoryByUser = async (req, res) => {
   const { postId } = req.params;
   const { userId } = req.user;
   try {
-    const post = await Post.findOne({ _id: postId, createdBy: userId });
+    const post = await Post.findOne({
+      _id: postId,
+      createdBy: userId,
+    }).populate("createdBy");;
     res.status(200).json({ success: true, post });
   } catch (error) {
     res.json({ error });
@@ -79,7 +82,7 @@ const updateStory = async (req, res) => {
         new: true,
         runValidators: true,
       }
-    );
+    ).populate("createdBy");;
     res.status(200).json({ success: true, post });
   } catch (error) {
     res.json({ error });
