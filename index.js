@@ -22,6 +22,9 @@ app.use(express.json());
 app.use(cors());
 
 //routes
+app.get((req, res)=>{
+  res.status(200).json({message: "Post It Server" });
+})
 app.use("/api/v1", userRouter);
 app.get("/api/v1/user", auth, async (req, res) => {
   const { userId } = req.user;
